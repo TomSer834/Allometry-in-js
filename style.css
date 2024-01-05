@@ -1,0 +1,155 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    /* max-width: 1024px; */
+}
+
+body {
+    /* background-color: #5e5b69; */
+    background-color: #000e19;
+    background-image: url("./images/S-03.jpg");
+    background-repeat: no-repeat;
+    font-family: Monospace;
+    background-size:cover;
+    max-width: 1024px;
+    min-width: 34rem;
+}
+
+header {
+    height: 4rem;
+    color: rgb(37, 156, 156);
+    font-size: 2.2rem;
+    font-style: italic;
+    background-color: rgb(6, 6, 49);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 75%;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
+/* ===== Control panel ===== */
+
+.inputField {
+    width: 18rem;
+    background-color: #cccbcb;
+    padding: 0.8rem;
+    padding-bottom: 0;
+    margin-top: 1rem;
+    border-radius: .3rem;
+    position: relative;
+    opacity: 90%;
+}
+
+.firstSpan {
+    color: #1515FF;
+    font-size: 0.85rem;
+}
+
+.inputItems {
+    color: #252525;
+    font-size: 0.75rem;
+}
+
+.inputElements {
+    width: 4rem;
+    text-align: right;
+}
+
+.inputElement-1 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.inputElement-3 {
+    margin-top: 1rem;
+}
+
+.inputElement-7 {
+    margin-bottom: 1rem;
+}
+
+.inputFieldBottom {
+    height: 3.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.button {
+    width: 6rem;
+    color: rgb(255, 88, 88);
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bolder;
+    font-size: 1.2rem;
+}
+
+/* ===== Control panel end===== */
+
+table {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: rgb(240, 240, 240);
+    background-color: #69693f;
+    text-align: left;
+    border-radius: 0.3rem;
+    border-collapse: separate;
+}
+
+.legend {
+    margin: 1.2rem;
+}
+
+.legend td {
+    padding: .2rem .8rem .2rem .8rem;
+}
+
+.legend tr:nth-child(even) {
+    background-color: #7c7c52;
+}
+
+.legend tr:nth-child(odd) {
+    background-color: #6e6e3d;
+}
+
+#legend-table {
+    display: flex;
+    justify-content: center;
+}
+
+#data-table {
+    display: flex;
+    justify-content: center;
+}
+
+.data {
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: rgb(230, 230, 230);
+    margin-bottom: 3rem;
+    background-color: #636363;
+    text-align: right;
+}
+
+.data td {
+    padding: .3rem;
+    width: 5.25rem;
+    color: rgb(224, 224, 224);
+}
+
+.data td:nth-child(1),
+td:nth-child(8) {
+    background-color: #050505;
+}
+
+.data-tr {
+    text-align: center;
+    font-weight: bolder;
+    color: rgb(199, 199, 199);
+}

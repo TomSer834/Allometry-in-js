@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Carcharodon carcharias</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h6>Carcharodon carcharias</h6>
+    </header>
+
+    <main>
+        <div class="inputField">
+
+            <span class="firstSpan">Choose the size reference for allometric comparison:</span>
+
+            <div class="inputItems">
+                <form id="starter" action="" method="">
+
+                    <label for="element_1">
+                        <span>length: &nbsp;&nbsp;</span>
+                        <input id="element_1" class="inputElements inputElement-1" name="length_ref_in_meters"
+                            type="number" min="1" max="7" step="1" value="3">
+                        <span>m&nbsp;</span>
+                    </label>
+
+                    <label for="element_2">
+                        <input id="element_2" class="inputElements" name="length_ref_in_centimeters" type="number"
+                            min="0" max="90" step="10" value="50">
+                        <span>cm</span>
+                    </label>
+
+                    <hr>
+
+                    <p style="color: #1515FF; font-size: 0.85rem; margin-top: 1rem;">Specify the size range:</p>
+
+                    <label for="element_3">
+                        <span>start at:&nbsp;</span>
+                        <input id="element_3" class="inputElements inputElement-3" name="start_at_in_meters"
+                            type="number" min="1" max="7" step="1" value="2">
+                        <span>m&nbsp;</span>
+                    </label>
+
+                    <label for="element_4">
+                        <input id="element_4" class="inputElements" name="start_in_centimeters"
+                            style="width: 4rem; text-align: right;" type="number" min="0" max="90" step="10" value="50">
+                        <span>cm</span>
+                    </label>
+
+                    <label for="element_5">
+                        <span>end at: &nbsp;&nbsp;</span>
+                        <input id="element_5" class="inputElements" name="end_at_in_meters"
+                            style="width: 4rem; text-align: right;" type="number" min="1" max="20" step="1" value="4">
+                        <span>m&nbsp;</span>
+                    </label>
+
+                    <label for="element_6">
+                        <input id="element_6" class="inputElements" name="end_at_in_centimeters"
+                            style="width: 4rem; text-align: right;" type="number" min="0" max="90" step="10" value="50">
+                        <span>cm</span>
+                    </label>
+
+                    <label for="element_7">
+                        <span>step size:</span>
+                        <input id="element_7" class="inputElements inputElement-7" name="step_size_in_centimeters"
+                            type="number" min="10" max="200" step="10" value="50">
+                        <span>cm</span>
+                    </label>
+
+                    <hr>
+
+                    <div class="inputFieldBottom">
+                        <label for="element_7">
+                            <input id="element_7" class="button" type="submit" value="Calculate" name="Calculate">
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+
+    <div id="legend-table"></div>
+
+    <div id="data-table"></div>
+
+ 
+    <script src="settings.js"></script>
+
+    <script src="calculations.js"></script>   
+
+    <script>
+
+        let Starter = document.getElementById('starter');
+
+        Starter.addEventListener("submit", (e) => {
+            e.preventDefault();
+            makeTables()
+        });
+
+
+        function makeTables() {
+
+            /* ======================= input field ======================= */
+
+            let length_reference_meters = parseFloat(document.getElementById('element_1').value);
+            let length_reference_centimeters = parseFloat(document.getElementById('element_2').value);
+            let start_at_meters = parseFloat(document.getElementById('element_3').value);
+            let start_at_centimeters = parseFloat(document.getElementById('element_4').value);
+            let end_at_meters = parseFloat(document.getElementById('element_5').value);
+            let end_at_centimeters = parseFloat(document.getElementById('element_6').value);
+            let step_size_centimeters = parseFloat(document.getElementById('element_7').value);
+
+            let length_reference = length_reference_meters + length_reference_centimeters / 100;
+            let start_at = start_at_meters + start_at_centimeters / 100;
+            let end_at = end_at_meters + end_at_centimeters / 100;
+            let step_size = step_size_centimeters / 100;
+
+            if (start_at > end_at) step_size = -step_size;
+
+
+            let numberTableBodyRows = Math.floor(Math.abs((end_at - start_at) / step_size + 1 + 0.001));
+            let firstColumnValues = new Array(numberTableBodyRows);
+
+            let tableBodyValues = new Array(numberTableBodyRows);/* , columnTitles.length - 1, legend.length); */
+            for (let i = 0; i < numberTableBodyRows; i++) {
+                tableBodyValues[i] = new Array(columnTitles.length);
+            }
+            for (let i = 0; i < numberTableBodyRows; i++) {
+                for (let j = 0; j < columnTitles.length; j++) {
+                    tableBodyValues[i][j] = new Array(legend.length);
+                }
+            }
+
+            let dataSetSingleCell = new Array(legend.length);
+
+
+            /* ======================= display legend table ====================== */
+
+            let text = "";
+            text += "<table class='legend'>";
+            for (let i = 0; i < legend.length; i++) {
+                text += "<tr>";
+                text += "<td>" + "&nbsp" + `${i + 1}` + ". Cell entry:" + "</td>";  /* column on the left */
+                text += "<td>" + "<p>" + legend[i] + " " + "</p>" + "</td>"; /* column on the right */
+                text += "</tr>";
+            }
+            text += "</table>";
+
+            document.getElementById("legend-table").innerHTML = text;
+
+
+            /* ======================= data table calculation ====================== */
+
+            /* table body calculation including first column */
+
+            for (let i = 0; i < numberTableBodyRows; i++) {
+
+                let average = [legend.length];
+                for (let j = 0; j < legend.length; j++) {
+                    average[j] = 0;
+                }
+
+                for (let j = 0; j < columnTitles.length - 2; j++) {
+
+                    /* first column */
+                    firstColumnValues[i] = (start_at + i * step_size);
+
+                    /* values by teams' formulas for a whole table cell */
+                    dataSetSingleCell = calculateCell(columnTitles[i + 1, j + 1], firstColumnValues[i], length_reference);
+
+                    /* copy returned cell array to table body array */
+                    for (let k = 0; k < legend.length; k++) {
+                        tableBodyValues[i][j][k] = dataSetSingleCell[k];
+                    }
+
+                    /* add returned cell array values to average */
+                    for (let k = 0; k < legend.length; k++) {
+                        average[k] += dataSetSingleCell[k];
+                    }
+                }
+
+                /* copy cell values of average to table body array */
+                for (let k = 0; k < legend.length; k++) {
+                    tableBodyValues[i][columnTitles.length - 1][k] = (average[k] / (columnTitles.length - 2));
+                }
+            }
+
+
+            /* ======================= display data table ====================== */
+
+            /* display table head of data table */
+
+            text = "<table class='data'>";
+            text += "<th>";
+            text += "<tr class='data-tr'>";
+            for (let j = 0; j < columnTitles.length; j++) {
+
+                text += "<td style='background-color: #" + columnTitleColors[j] + ";'>";
+                text += "<p>" + columnTitles[j] + " " + "</p><br>";
+                text += "</td>";
+            }
+            text += "</tr>";
+            text += "</th>";
+
+
+            /* display table body of data table */
+
+            text += "<tb>";
+
+            let unitSpaceMax = 0;
+            for (let j = 0; j < units.length; j++) {
+                if (units[j].length > unitSpaceMax) unitSpaceMax = units[j].length;
+            }
+
+            for (let i = 0; i < numberTableBodyRows; i++) {
+
+                /* first column */
+                text += "<tr>";
+                text += "<td>" + "<p style='text-align: center';>" + firstColumnValues[i].toFixed(2) + " " + "</p>" + "</td>";
+
+                /* from second to forelast column */
+                for (let j = 0; j < columnTitles.length - 2; j++) {
+
+                    text += "<td style='background-color: #" + columnColors[j + 1] + ";'>";
+
+                    for (let k = 0; k < legend.length; k++) {
+
+                        if (addPlus[k] && tableBodyValues[i][j][k] > 0) text += "+";
+
+                        text += tableBodyValues[i][j][k].toFixed(roundToDigits[k]);
+                        text += "&nbsp";
+                        text += units[k];
+
+                        /* ad spaces to units for equal width */
+                        let unitlength = Number(units[k].length);
+                        if (unitSpaceMax > unitlength) {
+                            for (let m = unitlength; m < unitSpaceMax; m++) {
+                                text += "&nbsp";
+                            }
+                        }
+
+                        text += "<br>";
+                    }
+                    text += "</td>";
+                }
+
+                /* last column */
+                text += "<td style='background-color: #" + columnColors[columnColors.length - 1] + ";'>";
+
+                for (let k = 0; k < legend.length; k++) {
+
+                    if (addPlus[k] && tableBodyValues[i][columnColors.length - 1][k] > 0) text += "+";
+
+                    text += tableBodyValues[i][columnTitles.length - 1][k].toFixed(roundToDigits[k]);
+                    text += "&nbsp";
+                    text += units[k];
+
+
+                    if (unitSpaceMax > units[k].length) {
+                        for (let m = units[k].length; m < unitSpaceMax; m++) {
+                            text += "&nbsp";
+                        }
+                    }
+
+                    text += "<br>";
+                }
+
+                text += "</td>";
+                text += "</tr>";
+            }
+            text += "</tb>";
+            text += "</table>";
+
+            document.getElementById("data-table").innerHTML = text;
+
+
+        }
+    </script>
+
+
+
+</body>
+
+</html>
