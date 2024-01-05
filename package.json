@@ -14,10 +14,5 @@
   },
   "dependencies": {
     "sass": "^1.62.1"
-  },
-  "compilerOptions": {
-    "strict": true,
-    "noImplicitAny": true,
-    "checkJs": true
   }
 }
