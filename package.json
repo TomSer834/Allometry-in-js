@@ -17,6 +17,7 @@
   },
   "compilerOptions": {
     "strict": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "checkJs": true
   }
 }
