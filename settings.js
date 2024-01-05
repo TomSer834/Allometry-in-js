@@ -1,5 +1,5 @@
 /* columns settings */
-columnTitles = [
+const columnTitles = [
     "Length [m]",
     "MacClain et al.",
     "Gottfried et al.",
@@ -10,7 +10,7 @@ columnTitles = [
     "Average"
 ];
 
-columnTitleColors = [
+const columnTitleColors = [
     "#111111",
     "333333",
     "333333",
@@ -21,7 +21,7 @@ columnTitleColors = [
     "111111"
 ];
 
-columnColors = [
+const columnColors = [
     "111111",
     "500505",
     "553000",
