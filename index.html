@@ -128,7 +128,7 @@
             let numberTableBodyRows = Math.floor(Math.abs((end_at - start_at) / step_size + 1 + 0.001));
             let firstColumnValues = new Array(numberTableBodyRows);
 
-            let tableBodyValues = new Array(numberTableBodyRows);/* , columnTitles.length - 1, legend.length); */
+            let tableBodyValues = new Array(numberTableBodyRows);
             for (let i = 0; i < numberTableBodyRows; i++) {
                 tableBodyValues[i] = new Array(columnTitles.length);
             }
@@ -147,8 +147,8 @@
             text += "<table class='legend'>";
             for (let i = 0; i < legend.length; i++) {
                 text += "<tr>";
-                text += "<td>" + "&nbsp" + `${i + 1}` + ". Cell entry:" + "</td>";  /* column on the left */
-                text += "<td>" + "<p>" + legend[i] + " " + "</p>" + "</td>"; /* column on the right */
+                text += "<td>" + "&nbsp" + `${i + 1}` + ". Cell entry:" + "</td>";
+                text += "<td>" + "<p>" + legend[i] + " " + "</p>" + "</td>";
                 text += "</tr>";
             }
             text += "</table>";
