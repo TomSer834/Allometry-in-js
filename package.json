@@ -16,6 +16,7 @@
     "sass": "^1.62.1"
   },
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "noImplicitAny": true
   }
 }
